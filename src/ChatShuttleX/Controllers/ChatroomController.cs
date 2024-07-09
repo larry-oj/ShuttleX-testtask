@@ -1,4 +1,6 @@
+using System.Globalization;
 using ChatShuttleX.Services;
+using ChatShuttleX.Services.Hubs;
 using ChatShuttleX.Services.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +8,7 @@ namespace ChatShuttleX.Controllers;
 
 [ApiController]
 [Route("chats")]
-public class ChatroomController(IChatroomService chatroomService) : ControllerBase
+public class ChatroomController(IChatroomService chatroomService, ChatHub hub) : ControllerBase
 {
     [HttpGet]
     public IActionResult GetAll()
@@ -59,7 +61,7 @@ public class ChatroomController(IChatroomService chatroomService) : ControllerBa
     
     [HttpDelete]
     [Route("delete")]
-    public IActionResult DeleteChatroom([FromBody] ChatroomDelete obj)
+    public async Task<IActionResult> DeleteChatroom([FromBody] ChatroomDelete obj)
     {
         try
         {
@@ -68,6 +70,18 @@ public class ChatroomController(IChatroomService chatroomService) : ControllerBa
             {
                 return BadRequest("You are not the owner of this chatroom");
             }
+            
+            // tell all users in the chatroom that it has been deleted
+            await hub.Clients.Group(chatroom.Name)
+                .ReceiveMessage("System", "This chatroom has been deleted by the owner.", DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
+            
+            // remove all users from the chatroom
+            ChatHub.Connections.TryRemove(chatroom.Name, out var removed);
+            foreach (var user in removed!)
+            {
+                await hub.Groups.RemoveFromGroupAsync(user, chatroom.Name);
+            }
+            
             chatroomService.DeleteChatroom(obj.ChatroomId);
             return Ok();
         }

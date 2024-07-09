@@ -1,5 +1,6 @@
 using ChatShuttleX.Controllers;
 using ChatShuttleX.Services;
+using ChatShuttleX.Services.Hubs;
 using ChatShuttleX.Services.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -9,13 +10,15 @@ namespace ChatShuttleX.IntegrationTests;
 public class ChatroomControllerTests
 {
     private Mock<IChatroomService> _mockChatroomService;
+    private Mock<ChatHub> _mockChatHub;
     private ChatroomController _controller;
 
     [SetUp]
     public void Setup()
     {
         _mockChatroomService = new Mock<IChatroomService>();
-        _controller = new ChatroomController(_mockChatroomService.Object);
+        _mockChatHub = new Mock<ChatHub>(_mockChatroomService.Object);
+        _controller = new ChatroomController(_mockChatroomService.Object, _mockChatHub.Object);
     }
 
     [Test]
@@ -91,7 +94,7 @@ public class ChatroomControllerTests
         _mockChatroomService.Setup(service => service.GetChatroom(It.IsAny<int>())).Returns(chatroom);
         var deleteRequest = new ChatroomDelete { ChatroomId = 1, Username = "testuser" };
 
-        var result = _controller.DeleteChatroom(deleteRequest);
+        var result = _controller.DeleteChatroom(deleteRequest).Result;
 
         var badRequestResult = result as BadRequestObjectResult;
         Assert.IsNotNull(badRequestResult);
@@ -104,7 +107,7 @@ public class ChatroomControllerTests
         _mockChatroomService.Setup(service => service.GetChatroom(It.IsAny<int>())).Throws(new Exception("Chatroom not found"));
         var deleteRequest = new ChatroomDelete { ChatroomId = 1, Username = "testuser" };
 
-        var result = _controller.DeleteChatroom(deleteRequest);
+        var result = _controller.DeleteChatroom(deleteRequest).Result;
 
         var badRequestResult = result as BadRequestObjectResult;
         Assert.IsNotNull(badRequestResult);
