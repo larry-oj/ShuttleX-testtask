@@ -1,3 +1,5 @@
+using ChatShuttleX.Data.Models;
+
 namespace ChatShuttleX.Services.Models;
 
 /// <summary>
@@ -12,13 +14,21 @@ public class ChatroomModel
     /// <summary>
     /// Name of the chatroom. Must be unique
     /// </summary>
-    public int Name { get; set; }
+    public string Name { get; set; }
     /// <summary>
     /// Chatroom creator
     /// </summary>
     public UserModel Owner { get; set; }
-    /// <summary>
-    /// Chatroom participants. Includes creator
-    /// </summary>
-    public List<UserModel> Participants { get; set; }
+
+    public ChatroomModel()
+    {
+        
+    }
+
+    public ChatroomModel(Chatroom room)
+    {
+        Id = room.Id;
+        Name = room.Name;
+        Owner = new UserModel(room.Creator);
+    }
 }

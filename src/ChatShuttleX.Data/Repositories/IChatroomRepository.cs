@@ -7,6 +7,7 @@ public interface IChatroomRepository : IDisposable
     IEnumerable<Chatroom> GetChatrooms();
     Chatroom GetChatroomById(int id);
     Chatroom GetChatroomByName(string name);
+    IEnumerable<Chatroom> GetAllChatroomsByName(string name);
     Chatroom GetChatroomByOwner(User owner);
     void InsertChatroom(Chatroom chatroom);
     void UpdateChatroom(Chatroom chatroom);

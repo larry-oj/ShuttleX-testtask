@@ -23,6 +23,12 @@ public class ChatroomRepository(ChatContext context) : IChatroomRepository
         return chatroom;
     }
 
+    public IEnumerable<Chatroom> GetAllChatroomsByName(string name)
+    {
+        var chatroom = context.Chatrooms.Where(c => c.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+        return chatroom;
+    }
+
     public Chatroom GetChatroomByOwner(User owner)
     {
         var chatroom = context.Chatrooms.FirstOrDefault(c => c.Creator == owner);
@@ -36,7 +42,10 @@ public class ChatroomRepository(ChatContext context) : IChatroomRepository
         ArgumentNullException.ThrowIfNull(chatroom);
 
         if (context.Chatrooms.Any(c => c.Id == chatroom.Id || c.Name.Equals(chatroom.Name, StringComparison.CurrentCultureIgnoreCase)))
-            throw new ArgumentException("User already exists");
+            throw new ArgumentException("Chatroom already exists");
+
+        if (!context.Users.Any(u => u.Id == chatroom.Creator.Id))
+            throw new ArgumentException("User doesn't exist");
 
         context.Chatrooms.Add(chatroom);
     }
