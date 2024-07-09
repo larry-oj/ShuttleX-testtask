@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatShuttleX", "ChatShuttleX\ChatShuttleX.csproj", "{EF89DD10-074C-4657-A311-BDD6FC9576E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatShuttleX.Services", "ChatShuttleX.Services\ChatShuttleX.Services.csproj", "{91C37A95-0334-48D5-989E-3D8243E1BF32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{EF89DD10-074C-4657-A311-BDD6FC9576E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF89DD10-074C-4657-A311-BDD6FC9576E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF89DD10-074C-4657-A311-BDD6FC9576E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91C37A95-0334-48D5-989E-3D8243E1BF32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C37A95-0334-48D5-989E-3D8243E1BF32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C37A95-0334-48D5-989E-3D8243E1BF32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C37A95-0334-48D5-989E-3D8243E1BF32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
