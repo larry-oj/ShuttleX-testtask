@@ -11,6 +11,8 @@ builder.Services.AddDbContext<ChatContext>(ops =>
     ops.UseNpgsql(builder.Configuration.GetSection("Database:ConnectionString").Value);
 });
 
+builder.Services.AddControllers();
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IChatroomRepository, ChatroomRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -26,6 +28,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseHttpsRedirection();
 
+app.MapControllers();
 app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

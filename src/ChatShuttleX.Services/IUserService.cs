@@ -10,6 +10,12 @@ public interface IUserService : IDisposable
     /// <param name="username">Unique name</param>
     void Register(string username);
     /// <summary>
+    /// Check if user exists
+    /// </summary>
+    /// <param name="username">Unique name</param>
+    /// <returns>True if exists</returns>
+    bool UserExists(string username);
+    /// <summary>
     /// Get user by username
     /// </summary>
     /// <param name="username">Unique name (non case-sensitive)</param>

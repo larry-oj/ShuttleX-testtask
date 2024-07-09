@@ -28,6 +28,24 @@ public class UserService(IUserRepository userRepository) : IUserService
         userRepository.Save();
     }
 
+    public bool UserExists(string username)
+    {
+        try
+        {
+            userRepository.GetUserByUsername(username);
+            return true;
+        }
+        catch (Exception e)
+        {
+            if (e is not ArgumentException { Message: "User not found" })
+            {
+                throw new Exception(e.Message, e);
+            }
+        }
+
+        return false;
+    }
+
     public UserModel GetUser(string username)
     {
         try

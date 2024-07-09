@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using ChatShuttleX.Data.Models;
 
 namespace ChatShuttleX.Services.Models;
@@ -10,14 +11,17 @@ public class ChatroomModel
     /// <summary>
     /// The unique identifier of the chatroom
     /// </summary>
+    [JsonPropertyName("id")]
     public int Id { get; set; }
     /// <summary>
     /// Name of the chatroom. Must be unique
     /// </summary>
+    [JsonPropertyName("name")]
     public string Name { get; set; }
     /// <summary>
     /// Chatroom creator
     /// </summary>
+    [JsonPropertyName("creator")]
     public UserModel Owner { get; set; }
 
     public ChatroomModel()

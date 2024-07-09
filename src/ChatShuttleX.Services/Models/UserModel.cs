@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using ChatShuttleX.Data.Models;
 
 namespace ChatShuttleX.Services.Models;
@@ -10,10 +11,12 @@ public class UserModel
     /// <summary>
     /// Unique identifier of the user
     /// </summary>
+    [JsonPropertyName("id")]
     public int Id { get; set; }
     /// <summary>
     /// Unique username of the user
     /// </summary>
+    [JsonPropertyName("username")]
     public string Username { get; set; }
     
     public UserModel()
