@@ -2,7 +2,7 @@ using ChatShuttleX.Data.Models;
 
 namespace ChatShuttleX.Data.Repositories;
 
-public interface IUserRepository
+public interface IUserRepository : IDisposable
 {
     IEnumerable<User> GetUsers();
     User GetUserById(int id);
