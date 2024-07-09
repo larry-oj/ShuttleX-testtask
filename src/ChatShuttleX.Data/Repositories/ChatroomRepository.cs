@@ -4,7 +4,6 @@ namespace ChatShuttleX.Data.Repositories;
 
 public class ChatroomRepository(ChatContext context) : IChatroomRepository
 {
-
     public IEnumerable<Chatroom> GetChatrooms()
         => context.Chatrooms.AsEnumerable();
 

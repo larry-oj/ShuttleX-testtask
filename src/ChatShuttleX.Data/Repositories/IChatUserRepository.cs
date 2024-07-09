@@ -2,12 +2,11 @@ using ChatShuttleX.Data.Models;
 
 namespace ChatShuttleX.Data.Repositories;
 
-public interface IChatUserRepository
+public interface IChatUserRepository : IDisposable
 {
     IEnumerable<ChatUser> GetChatUsers();
-    ChatUser GetChatUserById(int id);
-    ChatUser GetChatUserByUser(User user);
-    ChatUser GetChatUserByChatroom(Chatroom owner);
+    IEnumerable<ChatUser> GetChatUsersByChatroomId(int id);
+    IEnumerable<ChatUser> GetChatUsersByChatroom(Chatroom chat);
     void InsertChatUser(ChatUser chatUser);
     void UpdateChatUser(ChatUser chatUser);
     void DeleteChatUser(int id);
