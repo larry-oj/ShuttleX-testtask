@@ -21,8 +21,14 @@ public interface IChatroomService : IDisposable
     /// Get all chatrooms with a given name
     /// </summary>
     /// <param name="name">Name of a chatroom (not case-sensitive)</param>
-    /// <returns></returns>
+    /// <returns><see cref="IEnumerable{T}"/>(of <see cref="ChatroomModel"/>) of found chats</returns>
     IEnumerable<ChatroomModel> GetChatrooms(string name = "");
+    /// <summary>
+    /// Get chatroom by unique identifier
+    /// </summary>
+    /// <param name="chatroomId">Unique identifier</param>
+    /// <returns><see cref="ChatroomModel"/> of found chatroom</returns>
+    ChatroomModel GetChatroom(int chatroomId);
     /// <summary>
     /// Delete chatroom from the system.
     /// </summary>

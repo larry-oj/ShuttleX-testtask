@@ -67,6 +67,24 @@ public class ChatroomService(IChatroomRepository chatroomRepository) : IChatroom
         }
     }
 
+    public ChatroomModel GetChatroom(int chatroomId)
+    {
+        try
+        {
+            return new ChatroomModel(chatroomRepository.GetChatroomById(chatroomId));
+        }
+        catch (Exception e)
+        {
+            throw e switch
+            {
+                ArgumentException { Message: "Chatroom not found" } 
+                    => new ChatroomDoesNotExistException(),
+                _
+                    => new Exception(e.Message, e)
+            };
+        }
+    }
+
     public void DeleteChatroom(int chatroomId)
     {
         try
