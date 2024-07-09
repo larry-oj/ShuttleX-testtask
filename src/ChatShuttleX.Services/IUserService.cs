@@ -8,8 +8,7 @@ public interface IUserService : IDisposable
     /// Register a new user
     /// </summary>
     /// <param name="username">Unique name</param>
-    /// <returns><see cref="UserModel"/> of a newly created user</returns>
-    UserModel Register(string username);
+    void Register(string username);
     /// <summary>
     /// Get user by username
     /// </summary>

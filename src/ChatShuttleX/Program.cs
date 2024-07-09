@@ -1,5 +1,6 @@
 using ChatShuttleX.Data;
 using ChatShuttleX.Data.Repositories;
+using ChatShuttleX.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddDbContext<ChatContext>(ops =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IChatroomRepository, ChatroomRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

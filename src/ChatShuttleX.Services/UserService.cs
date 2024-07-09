@@ -1,34 +1,105 @@
 using ChatShuttleX.Data.Models;
 using ChatShuttleX.Data.Repositories;
+using ChatShuttleX.Services.Exceptions;
 using ChatShuttleX.Services.Models;
 
 namespace ChatShuttleX.Services;
 
 public class UserService(IUserRepository userRepository) : IUserService
 {
-    public UserModel Register(string username)
+    public void Register(string username)
     {
-        throw new NotImplementedException();
+        try
+        {
+            userRepository.InsertUser(new User {Username = "username"});
+        }
+        catch (Exception e)
+        {
+            throw e switch
+            {
+                ArgumentException { Message: "User already exists" } 
+                    => new UserAlreadyExistsException(),
+                ArgumentNullException 
+                    => new InvalidUsernameException(),
+                _ 
+                    => new Exception(e.Message, e)
+            };
+        }
+        userRepository.Save();
     }
 
     public UserModel GetUser(string username)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return new UserModel(userRepository.GetUserByUsername(username));
+        }
+        catch (Exception e)
+        {
+            throw e switch
+            {
+                ArgumentException { Message: "User not found" } 
+                    => new UserDoesNotExistException(),
+                _
+                    => new Exception(e.Message, e)
+            };
+        }
     }
 
     public UserModel GetUser(int userId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return new UserModel(userRepository.GetUserById(userId));
+        }
+        catch (Exception e)
+        {
+            throw e switch
+            {
+                ArgumentException { Message: "User not found" } 
+                    => new UserDoesNotExistException(),
+                _
+                    => new Exception(e.Message, e)
+            };
+        }
     }
 
     public void DeleteUser(string username)
     {
-        throw new NotImplementedException();
+        try
+        {
+            userRepository.DeleteUser(userRepository.GetUserByUsername(username).Id);
+            userRepository.Save();
+        }
+        catch (Exception e)
+        {
+            throw e switch
+            {
+                ArgumentException { Message: "User not found" } 
+                    => new UserDoesNotExistException(),
+                _
+                    => new Exception(e.Message, e)
+            };
+        }
     }
 
     public void DeleteUser(int userId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            userRepository.DeleteUser(userId);
+            userRepository.Save();
+        }
+        catch (Exception e)
+        {
+            throw e switch
+            {
+                ArgumentException { Message: "User not found" } 
+                    => new UserDoesNotExistException(),
+                _
+                    => new Exception(e.Message, e)
+            };
+        }
     }
     
     // IDisposable 
