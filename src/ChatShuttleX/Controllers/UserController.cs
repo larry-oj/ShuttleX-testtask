@@ -14,16 +14,6 @@ public class UserController(IUserService userService) : ControllerBase
     {
         try
         {
-            if (string.IsNullOrEmpty(user.Username))
-            {
-                return BadRequest("Username is invalid");
-            }
-            
-            if (!userService.UserExists(user.Username))
-            {
-                return BadRequest("User already exists");
-            }
-            
             userService.Register(user.Username);
             return Ok();
         }

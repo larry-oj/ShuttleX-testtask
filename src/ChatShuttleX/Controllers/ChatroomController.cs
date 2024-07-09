@@ -6,7 +6,7 @@ namespace ChatShuttleX.Controllers;
 
 [ApiController]
 [Route("chats")]
-public class Chatroom(IChatroomService chatroomService) : ControllerBase
+public class ChatroomController(IChatroomService chatroomService) : ControllerBase
 {
     [HttpGet]
     public IActionResult GetAll()
@@ -58,12 +58,17 @@ public class Chatroom(IChatroomService chatroomService) : ControllerBase
     }
     
     [HttpDelete]
-    [Route("delete/{chatroomId}")]
-    public IActionResult DeleteChatroom([FromRoute] int chatroomId)
+    [Route("delete")]
+    public IActionResult DeleteChatroom([FromBody] ChatroomDelete obj)
     {
         try
         {
-            chatroomService.DeleteChatroom(chatroomId);
+            var chatroom = chatroomService.GetChatroom(obj.ChatroomId);
+            if (chatroom.Owner.Username != obj.Username)
+            {
+                return BadRequest("You are not the owner of this chatroom");
+            }
+            chatroomService.DeleteChatroom(obj.ChatroomId);
             return Ok();
         }
         catch (Exception e)
