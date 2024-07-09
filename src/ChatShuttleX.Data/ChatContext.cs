@@ -7,7 +7,6 @@ public class ChatContext(DbContextOptions<ChatContext> options) : DbContext(opti
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Chatroom> Chatrooms { get; set; }
-    public DbSet<ChatUser> ChatUsers { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

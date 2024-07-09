@@ -11,7 +11,6 @@ builder.Services.AddDbContext<ChatContext>(ops =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IChatroomRepository, ChatroomRepository>();
-builder.Services.AddScoped<IChatUserRepository, ChatUserRepository>();
 
 var app = builder.Build();
 
