@@ -7,4 +7,7 @@ public class Chatroom : Entity
 {
     [Required]
     public User Creator { get; set; }
+    
+    [Required]
+    public string Name { get; set; }
 }

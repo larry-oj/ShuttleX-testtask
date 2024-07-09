@@ -22,5 +22,9 @@ public class ChatContext(DbContextOptions<ChatContext> options) : DbContext(opti
         modelBuilder.Entity<User>()
             .HasIndex(u => u.Username)
             .IsUnique();
+        
+        modelBuilder.Entity<Chatroom>()
+            .HasIndex(u => u.Name)
+            .IsUnique();
     }
 }
