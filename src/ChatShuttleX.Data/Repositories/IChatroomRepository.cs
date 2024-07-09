@@ -2,7 +2,7 @@ using ChatShuttleX.Data.Models;
 
 namespace ChatShuttleX.Data.Repositories;
 
-public interface IChatroomRepository
+public interface IChatroomRepository : IDisposable
 {
     IEnumerable<Chatroom> GetChatrooms();
     Chatroom GetChatroomById(int id);
